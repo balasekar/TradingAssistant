@@ -1,0 +1,38 @@
+# Python virtual environment (~270MB, regeneratable)
+openbb-env/
+
+# Third-party tool installer (140MB, downloadable via winget)
+TradingView_Installer/
+
+# Third-party git clone (instructions to re-clone are in README.md)
+# Whole folder excluded so this repo stays focused on user-authored work
+claude-trading-skills/
+
+# Daily generated reports (private market posture snapshots — keep local, don't push)
+reports/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Local secrets (FMP, Polygon, Alpha Vantage API keys, etc.)
+.env
+*.env
+api_keys.txt
+config.local.json
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Personal prompt library (private to user)
+Powerful prompts*.txt

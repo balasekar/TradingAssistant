@@ -1,0 +1,22 @@
+{
+  "$schema_note": "Config for the researching-stocks-with-tradingassistant skill. Edit values here to override defaults without modifying SKILL.md.",
+  "report_output_dir": "C:\\Users\\bgnanasekar\\OneDrive - Microsoft\\Documents\\AISidekick\\Trading",
+  "report_filename_pattern": "{date}_investing_{slug}.md",
+  "always_save_reports": true,
+  "default_tranche_split_pct": [40, 35, 25],
+  "default_tranche_intervals_weeks": [0, 3, 6],
+  "regime_circuit_breaker_breadth_below": 30,
+  "regime_circuit_breaker_coach_verdict": "CASH_PRIORITY",
+  "existing_holdings_to_avoid_overlap": [
+    {"ticker": "MSFT", "shares": 100, "theme": "US mega-cap tech"},
+    {"ticker": "HUBS", "shares": 100, "theme": "US small-mid SaaS"}
+  ],
+  "preferred_eur_listings": {
+    "SAP": "XETRA",
+    "RACE": "Borsa Italiana",
+    "BAESY": "LSE (as BA.L)",
+    "ASML": "Euronext Amsterdam",
+    "NESN": "SIX Swiss Exchange",
+    "LVMH": "Euronext Paris (as MC.PA)"
+  }
+}

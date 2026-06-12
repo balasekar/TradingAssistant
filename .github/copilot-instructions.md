@@ -12,6 +12,8 @@ This repo is *glue*, not implementation. It composes three external tools:
 
 The user-authored code is just `my_scripts/`, `examples/`, and the three `.bat` files at the root. When asked to "add a script", default to `my_scripts/` and follow its conventions.
 
+Curated LLM prompts live in `prompts/` (one `.md` file per prompt, each with verbatim source attribution, placeholder table, and a "how it fits the 3-tool stack" section). These are conversation starters for an external chat LLM — they do **not** run Python and are not part of `MORNING_ROUTINE.bat`. When asked to "add a prompt" or "save this prompt", create a new file in `prompts/` matching the shape of `prompts/portfolio-architect.md`.
+
 ## Environment
 
 - **Windows only.** All entry points are `.bat`. Paths use backslashes.
@@ -36,12 +38,14 @@ No `pytest`, no CI. "Verifying a change" means running the script and reading th
 
 ## Conventions
 
-- **Scripts are self-contained CLIs.** Module docstring at top with `Usage:` block, constants in ALL_CAPS at module level, single `main()` function, `if __name__ == "__main__": main()`. See `my_scripts/portfolio_health_check.py` for the canonical shape.
+- **Scripts are self-contained CLIs.** Module docstring at top with `Usage:` block, constants in ALL_CAPS at module level, single `main()` function, `if __name__ == "__main__": main()`. See `my_scripts/portfolio_health_check.py` for the canonical shape — note the `c in df.columns and not df.empty` guard before reading each field (provider responses are not stable).
 - **Portfolio tickers are hardcoded to `["MSFT", "HUBS"]`.** The repo is opinionated for one user holding a concentrated grant. Don't generalize this without being asked.
 - **OpenBB call shape:** `obb.<domain>.<...>(ticker, provider="yfinance").to_df()`. Always wrap in `try/except` and print `[WARN] {ticker}: {exc}` on failure — rate limits and missing fields are routine, scripts must keep going.
 - **Output is stdout tables** (`pandas.DataFrame.to_string()`), not files. `MORNING_ROUTINE.bat` captures structured output from claude-trading-skills via its own `--output-dir` flags, not from `my_scripts/`.
 - **Reports are private.** Anything written under `reports/` or `claude-trading-skills/reports/` is gitignored. Never commit a report, briefing, or anything containing live portfolio data.
 - **`.bat` files use `setlocal` + `%~dp0`** for the script directory and `pause` at the end so a double-click leaves the window open. Match that pattern for new launchers.
+- **`.bat` launchers that invoke Python must export `PYTHONIOENCODING=utf-8` and `PYTHONUTF8=1`** before running scripts — `MORNING_ROUTINE.bat` does this. Without it, scripts emitting emoji / box-drawing characters crash with `UnicodeEncodeError` on the Windows console.
+- **Pipeline chaining in `MORNING_ROUTINE.bat`** works by globbing the newest JSON each skill writes into `%REPORTS%` (`for /f "delims=" %%i in ('dir /b /od ...')`) and passing it as a `--breadth` / `--uptrend` flag to the next skill. Any new pipeline step must (a) write JSON into `%REPORTS%` with a stable filename prefix and (b) accept its inputs as `--<name>` paths, not from stdin.
 
 ## What not to do
 

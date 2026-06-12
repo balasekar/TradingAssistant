@@ -246,6 +246,11 @@ TradingAssistant/
 │   ├── macro_watch.py               ← monthly: Fed, 10Y, CPI, jobs
 │   └── insider_alert.py             ← weekly: insider buys/sells
 │
+├── prompts/                     ← curated LLM prompts (paste into Claude/ChatGPT/Grok)
+│   ├── claude-trading-prompts.md    ← 16 hedge-fund-manager prompts (AI Panda)
+│   ├── claude-quant-desk-prompts.md ← 15 Wall Street desk personas (Ryan Hart)
+│   └── grok-trading-prompts.md      ← 7 Grok-focused short prompts (Elora Khatun)
+│
 ├── claude-trading-skills/       ← Tool 1 (git-cloned, gitignored)
 ├── openbb-env/                  ← Tool 3 venv (gitignored, 270 MB)
 ├── TradingView_Installer/       ← Tool 2 installer (gitignored, 140 MB)
